@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#09070d" />
+    <meta name="description" content="Una confesión demasiado seria para ser verdad." />
+    <title>Tengo que decirte algo</title>
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <div class="ambient" aria-hidden="true">
+      <span class="ambient__glow ambient__glow--a"></span>
+      <span class="ambient__glow ambient__glow--b"></span>
+      <span class="ambient__noise"></span>
+    </div>
+
+    <section class="loader" id="loader" aria-live="polite" aria-label="Preparando una confesión importante">
+      <div class="loader__panel">
+        <p class="eyebrow">protocolo de sinceridad v1.0</p>
+        <h1>Che, necesito decirte algo.</h1>
+        <p class="loader__status" id="loaderStatus">reuniendo valor...</p>
+        <div class="loader__track" aria-hidden="true"><span></span></div>
+        <div class="loader__checks" aria-hidden="true">
+          <span>sentimientos</span>
+          <span>amistad</span>
+          <span>dignidad</span>
+        </div>
+      </div>
+    </section>
+
+    <main class="page" id="page">
+      <section class="confession" id="confession" aria-labelledby="confessionTitle">
+        <div class="confession__badge">mensaje clasificado</div>
+        <p class="eyebrow">esto puede cambiarlo todo</p>
+        <h1 id="confessionTitle">Hay algo que vengo guardando hace demasiado.</h1>
+        <p class="confession__copy">Prometeme que vas a leer hasta el final y no vas a hacer preguntas innecesarias.</p>
+
+        <button class="reveal-button" id="revealButton" type="button">
+          <span>abrir confesión</span>
+          <span class="reveal-button__arrow" aria-hidden="true">→</span>
+        </button>
+
+        <p class="confession__warning">contenido emocionalmente cuestionable</p>
+      </section>
+
+      <section class="reveal" id="reveal" aria-labelledby="revealTitle" hidden>
+        <div class="rainbow-orbit" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="reveal__content">
+          <p class="reveal__pre">Bueno, ya fue.</p>
+          <h1 id="revealTitle">
+            <span>TE QUIERO</span>
+            <strong>GAY</strong>
+          </h1>
+          <p class="reveal__sub">era eso nomás, no te emociones tanto</p>
+
+          <div class="friendship-meter" aria-label="Nivel de amistad: sospechosamente alto">
+            <span class="friendship-meter__label">amistad</span>
+            <span class="friendship-meter__bar"><i></i></span>
+            <span class="friendship-meter__value">100%</span>
+          </div>
+
+          <button class="again-button" id="againButton" type="button">otra vez, por si no quedó claro</button>
+        </div>
+      </section>
+
+      <footer class="footer" id="footer">
+        <span></span>
+        <p>cero contexto · cero explicaciones · amistad intacta</p>
+        <span></span>
+      </footer>
+    </main>
+
+    <div class="confetti" id="confetti" aria-hidden="true"></div>
+    <div class="floating-words" id="floatingWords" aria-hidden="true"></div>
+
+    <noscript>
+      <p class="noscript">Necesitás JavaScript para arruinar la seriedad de esta confesión.</p>
+    </noscript>
+  </body>
+</html>
