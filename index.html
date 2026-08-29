@@ -8,6 +8,7 @@
     <title>Tengo que decirte algo</title>
     <script>document.documentElement.classList.add('js');</script>
     <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./music.css" />
     <script src="./app.js" defer></script>
   </head>
   <body>
@@ -75,6 +76,18 @@
         <span></span>
       </footer>
     </main>
+
+    <aside class="music-card" id="musicCard" aria-label="Música de la confesión" hidden>
+      <div class="music-card__topline">
+        <div>
+          <p class="music-card__eyebrow">banda sonora oficial del desastre</p>
+          <strong>Pluma Pluma Gay</strong>
+        </div>
+        <button class="music-card__close" id="musicClose" type="button" aria-label="Detener y cerrar música">×</button>
+      </div>
+      <div class="music-card__frame" id="musicFrame"></div>
+      <p class="music-card__status" id="musicStatus">0:46–1:16</p>
+    </aside>
 
     <div class="confetti" id="confetti" aria-hidden="true"></div>
     <div class="floating-words" id="floatingWords" aria-hidden="true"></div>
