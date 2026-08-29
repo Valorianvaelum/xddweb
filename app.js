@@ -9,6 +9,10 @@
   const againButton = document.querySelector('#againButton');
   const confetti = document.querySelector('#confetti');
   const floatingWords = document.querySelector('#floatingWords');
+  const musicCard = document.querySelector('#musicCard');
+  const musicFrame = document.querySelector('#musicFrame');
+  const musicClose = document.querySelector('#musicClose');
+  const musicStatus = document.querySelector('#musicStatus');
 
   const STATUS_LINES = [
     'reuniendo valor...',
@@ -19,9 +23,15 @@
 
   const WORDS = ['TE QUIERO GAY', 'BRO', 'JAJAJ', 'AMISTAD PREMIUM', 'ERA ESO NOMÁS'];
   const COLORS = ['#ff5c68', '#ffbf4f', '#f3ff66', '#69f29a', '#58dfff', '#9774ff', '#ff65c8'];
+  const VIDEO_ID = 'pBn5g314d5g';
+  const MUSIC_START = 46;
+  const MUSIC_END = 76;
+  const MUSIC_DURATION_MS = (MUSIC_END - MUSIC_START + 5) * 1000;
 
   let revealed = false;
   let statusTimer = null;
+  let musicTimer = null;
+  let musicHideTimer = null;
 
   function runLoader() {
     const delay = reducedMotion.matches ? 250 : 2700;
@@ -40,6 +50,67 @@
       loader?.classList.add('is-leaving');
       page?.classList.add('is-ready');
     }, delay);
+  }
+
+  function buildMusicUrl() {
+    const params = new URLSearchParams({
+      autoplay: '1',
+      start: String(MUSIC_START),
+      end: String(MUSIC_END),
+      playsinline: '1',
+      controls: '1',
+      rel: '0',
+    });
+
+    return `https://www.youtube.com/embed/${VIDEO_ID}?${params.toString()}`;
+  }
+
+  function revealMusicCard() {
+    if (!musicCard) return;
+    musicCard.hidden = false;
+    window.requestAnimationFrame(() => musicCard.classList.add('is-visible'));
+  }
+
+  function startMusic({ revealCard = false } = {}) {
+    if (!musicFrame || !musicCard) return;
+
+    window.clearTimeout(musicTimer);
+    window.clearTimeout(musicHideTimer);
+    musicCard.hidden = false;
+    musicCard.classList.remove('is-visible');
+
+    const iframe = document.createElement('iframe');
+    iframe.src = buildMusicUrl();
+    iframe.title = 'Los Morancos — Pluma Pluma Gay, fragmento de 0:46 a 1:16';
+    iframe.width = '220';
+    iframe.height = '200';
+    iframe.loading = 'eager';
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+    iframe.setAttribute('allowfullscreen', '');
+
+    musicFrame.replaceChildren(iframe);
+    if (musicStatus) musicStatus.textContent = '0:46–1:16 · si no arranca, tocá ▶';
+
+    if (revealCard) revealMusicCard();
+
+    musicTimer = window.setTimeout(() => {
+      if (musicStatus) musicStatus.textContent = 'terminó · tocá “otra vez” para repetir';
+    }, MUSIC_DURATION_MS);
+  }
+
+  function stopMusic() {
+    if (!musicCard || !musicFrame) return;
+
+    window.clearTimeout(musicTimer);
+    window.clearTimeout(musicHideTimer);
+    musicCard.classList.remove('is-visible');
+
+    musicHideTimer = window.setTimeout(() => {
+      musicFrame.replaceChildren();
+      musicCard.hidden = true;
+      if (musicStatus) musicStatus.textContent = '0:46–1:16';
+    }, 260);
   }
 
   function burstConfetti(multiplier = 1) {
@@ -105,12 +176,17 @@
 
   function revealJoke() {
     if (revealed) {
+      startMusic({ revealCard: true });
       burstConfetti(.55);
       burstWords();
       return;
     }
 
     revealed = true;
+
+    // Create the YouTube player synchronously inside the user's click so browsers
+    // have the best chance of allowing audible autoplay.
+    startMusic();
     confession?.classList.add('is-leaving');
 
     window.setTimeout(() => {
@@ -119,6 +195,7 @@
         reveal.hidden = false;
         reveal.classList.add('is-entering');
       }
+      revealMusicCard();
       burstConfetti(1);
       burstWords();
       againButton?.focus({ preventScroll: true });
@@ -128,7 +205,13 @@
   runLoader();
   revealButton?.addEventListener('click', revealJoke);
   againButton?.addEventListener('click', () => {
+    startMusic({ revealCard: true });
     burstConfetti(.7);
     burstWords();
+  });
+  musicClose?.addEventListener('click', stopMusic);
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && musicCard && !musicCard.hidden) stopMusic();
   });
 })();
