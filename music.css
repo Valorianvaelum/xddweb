@@ -1,0 +1,110 @@
+.music-card {
+  position: fixed;
+  right: clamp(.75rem, 2vw, 1.4rem);
+  bottom: clamp(.75rem, 2vw, 1.4rem);
+  z-index: 70;
+  width: 252px;
+  padding: .8rem;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 1rem;
+  background: rgba(10, 7, 14, .9);
+  box-shadow: 0 1.4rem 4rem rgba(0,0,0,.48), 0 0 2.5rem rgba(173,91,255,.12);
+  backdrop-filter: blur(18px);
+  opacity: 0;
+  transform: translateY(12px) scale(.97);
+  pointer-events: none;
+  transition: opacity 260ms ease, transform 260ms cubic-bezier(.16,1,.3,1);
+}
+
+.music-card[hidden] { display: none; }
+
+.music-card.is-visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.music-card__topline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .65rem;
+  margin-bottom: .65rem;
+}
+
+.music-card__eyebrow {
+  margin: 0 0 .18rem;
+  color: #8e8298;
+  font-size: .52rem;
+  font-weight: 800;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.music-card__topline strong {
+  display: block;
+  color: #f8f2fb;
+  font-size: .77rem;
+  font-weight: 650;
+}
+
+.music-card__close {
+  display: grid;
+  place-items: center;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 50%;
+  background: rgba(255,255,255,.04);
+  color: #bdb0c6;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.music-card__close:hover { color: #fff; background: rgba(255,255,255,.09); }
+.music-card__close:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+.music-card__frame {
+  width: 220px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: .72rem;
+  background: #050407;
+}
+
+.music-card__frame iframe {
+  display: block;
+  width: 220px;
+  height: 200px;
+  border: 0;
+}
+
+.music-card__status {
+  margin: .55rem 0 0;
+  color: #8f8498;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .58rem;
+  letter-spacing: .04em;
+}
+
+@media (max-width: 680px) {
+  .music-card {
+    right: .65rem;
+    bottom: .65rem;
+    width: 232px;
+    padding: .65rem;
+  }
+
+  .music-card__frame,
+  .music-card__frame iframe {
+    width: 208px;
+    height: 200px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .music-card { transition: none; }
+}
